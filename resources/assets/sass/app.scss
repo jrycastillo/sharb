@@ -1,0 +1,22 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+@import '~simple-line-icons/scss/simple-line-icons.scss';
+@import '~datatables.net-dt/css/jquery.dataTables.css';
+@import '~vuetify/dist/vuetify.css';
+
+// CUSTOM CSS
+@import './components/landing';
+@import './components/sb-admin';
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
