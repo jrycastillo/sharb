@@ -39,7 +39,7 @@
                                 class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
-                                <td>VAN NO. @{{ props.item.vn}}</td>
+                                <td>@{{ props.item.vn}}</td>
                                 <td v-for="item in props.item.gg" :key="item.value">
                                     @{{item.s}}
                                 </td>
@@ -120,6 +120,9 @@
                                 </v-card>
                             </v-dialog>
                         </v-card>
+                    </v-flex>
+                    <v-flex md12>
+                        <v-btn block color="success" @click="sendForApproval"><v-icon style="margin-right: 0.5rem;">send</v-icon>Send</v-btn>
                     </v-flex>
 
                     <v-snackbar
@@ -211,7 +214,7 @@
                                     });
                                     if (check) {
                                         this.headers = [...this.headers, {
-                                            text: detail.product.name + detail.product.class,
+                                            text: detail.product.name + ' - ' +detail.product.class,
                                             sortable: false,
                                             value: detail.product.id
                                         }];
@@ -228,7 +231,7 @@
                                 value: 999999999
                             }];
                             res.data.forEach((val, index) => {
-                                this.items = [...this.items, {vn: val.van_no, value: 0, gg: [], total: 0}];
+                                this.items = [...this.items, {vn: 'Van no: ' + val.van_no, value: 0, gg: [], total: 0}];
                                 this.headers.forEach((header, i) => {
                                     if (i !== 0 && i !== this.headers.length - 1) {
                                         let quantityNotExist = true;
@@ -335,12 +338,6 @@
                             });
                         });
                 },
-                {{--getContainerSize() {--}}
-                    {{--axios.get("{{url('/api/addproduct')}}" + '?type=size')--}}
-                        {{--.then(res => {--}}
-                            {{--this.containerSize = res.data;--}}
-                        {{--});--}}
-                {{--},--}}
                 storeContainerProduct() {
                     const containerDetail = {
                         van_id: this.editedItem.van_id,
@@ -395,6 +392,12 @@
                 fillData(data, index) {
                     this.editedItem.van_id = data.id;
                     this.breakdownIndex = index;
+                },
+                sendForApproval() {
+                    axios.put("{{url('/api/addproduct')}}" + '/' + "{{$loadingDetail->id}}")
+                        .then(res =>{
+                            window.location.href = '{{route('addproduct.index')}}';
+                        });
                 }
 
             },
@@ -407,7 +410,6 @@
             mounted() {
                 this.getSummary();
                 this.getProduct();
-                //this.getContainerSize();
             }
         })
     </script>

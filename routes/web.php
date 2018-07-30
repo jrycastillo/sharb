@@ -30,6 +30,7 @@ Route::resource('uncheckloading', 'UncheckLoading\UncheckLoadingController', ['o
 Route::resource('addproduct', 'Loading\AddProductController', ['only' => ['index', 'show']]);
 Route::get('/api/addproduct', 'Loading\AddProductController@getLoading');
 Route::post('/api/addproduct', 'Loading\AddProductController@store');
+Route::put('/api/addproduct/{id}', 'Loading\AddProductController@updateStatus');
 
 
 

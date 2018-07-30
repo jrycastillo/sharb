@@ -42,8 +42,8 @@ class LoadingController extends Controller
     public function create()
     {
         $bl_no = LoadingDetail::all()
-            ->where('rev','=', LoadingDetail::NEW)
-            ->where('status','=',LoadingDetail::BOOKING);
+            ->where('rev', '=', LoadingDetail::NEW)
+            ->where('status', '=', LoadingDetail::BOOKING);
 
 
         $suppliers = Supplier::pluck('name', 'id')->all();
@@ -173,6 +173,8 @@ class LoadingController extends Controller
         //return response()->json($loadingDetail);
 
     }
+
+
 
 
     public function destroy($id)

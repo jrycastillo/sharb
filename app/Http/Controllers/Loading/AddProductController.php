@@ -50,7 +50,7 @@ class AddProductController extends Controller
         $variable = '&';
 
         $loadingDetail = DB::table('loading_details')
-            ->select('BL_no', 'suppliers.name as supplier', 'vessel', 'port_of_discharges.city as POD',
+            ->select('loading_details.id', 'BL_no', 'suppliers.name as supplier', 'vessel', 'port_of_discharges.city as POD',
                 'port_of_loadings.city as POL', 'exporters.name as exporter', 'carriers.name as carrier', 'productionWeek',
                 'shipmentWeek', 'ETD', 'ETA', 'voyage_no', 'year', 'status')
             ->join('suppliers', 'supplier_id', '=', 'suppliers.id')
@@ -70,6 +70,17 @@ class AddProductController extends Controller
             ->with(compact('loadingDetail'))
             ->with(compact('id'))
             ->with(compact('variable'));
+    }
+
+    public function updateStatus($id)
+    {
+        $loadingDetail = LoadingDetail::findOrFail($id);
+
+        $loadingDetail['status'] = LoadingDetail::UNCHECK;
+
+        $loadingDetail->save();
+
+        return response()->json($loadingDetail);
     }
 
     public function edit($id)
@@ -94,7 +105,8 @@ class AddProductController extends Controller
         switch ($searchType) {
             case ($searchType === 'year'):
                 $year = $request->query('year');
-                $loadingDetails = LoadingDetail::all()->where('rev', '=', LoadingDetail::NEW)
+                $loadingDetails = LoadingDetail::all()
+                    ->where('rev', '=', LoadingDetail::NEW)
                     ->where('status', '=', LoadingDetail::ADDPRODUCT)
                     ->where('year', '=', $year)
                     ->groupBy('productionWeek');
