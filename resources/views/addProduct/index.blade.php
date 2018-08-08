@@ -36,32 +36,10 @@
                     <v-card-title primary-title>
                         <v-layout align-center justify-space-between row fill-height pa-3>
                             <v-flex class="headline" lg6>Add Products</v-flex>
-                            <v-flex lg6>
-                                {{--<v-combobox--}}
-                                        {{--v-model="select"--}}
-                                        {{--:items="items"--}}
-                                        {{--chips--}}
-                                        {{--label="I use a scoped slot"--}}
-                                {{-->--}}
-                                    {{--<template slot="selection" slot-scope="data">--}}
-                                        {{--<v-chip--}}
-                                                {{--:selected="data.selected"--}}
-                                                {{--:disabled="data.disabled"--}}
-                                                {{--:key="JSON.stringify(data.item)"--}}
-                                                {{--class="v-chip--select-multi "--}}
-                                                {{--@input="data.parent.selectItem(data.item)"--}}
-                                        {{-->--}}
-                                            {{--<v-avatar class="accent white--text">--}}
-                                                {{--{{ data.item.slice(0, 1).toUpperCase() }}--}}
-                                            {{--</v-avatar>--}}
-                                            {{--{{ data.item }}--}}
-                                        {{--</v-chip>--}}
-                                    {{--</template>--}}
-                                {{--</v-combobox>--}}
-                            </v-flex>
                         </v-layout>
                     </v-card-title>
                     <v-container fluid>
+
                         <v-data-table
                                 :headers="headers"
                                 :items="loadings"
@@ -121,7 +99,6 @@
                         value: 'name',
                         width: '100%',
                         class: ['title']
-
                     },
                 ]
             },
@@ -129,6 +106,7 @@
                 getData: function () {
                     axios.get("{{ url('/api/addproduct') }}"+ '?type=year&year='+ 2018)
                         .then(res => {
+
                             let data = [];
                             for (let gg in res.data) {
                                 let loading = {
@@ -143,6 +121,7 @@
                                 data = [...data, loading];
                             }
                             this.loadings = data;
+
                         });
                 },
                 expand: function (props) {

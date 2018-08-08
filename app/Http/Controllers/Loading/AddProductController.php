@@ -25,8 +25,6 @@ class AddProductController extends Controller
 
     public function index()
     {
-
-
         return View::make('addProduct.index');
     }
 
@@ -38,9 +36,7 @@ class AddProductController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-
         VanDetail::create($data);
-
         return response()->json($data);
     }
 
@@ -75,11 +71,8 @@ class AddProductController extends Controller
     public function updateStatus($id)
     {
         $loadingDetail = LoadingDetail::findOrFail($id);
-
         $loadingDetail['status'] = LoadingDetail::UNCHECK;
-
         $loadingDetail->save();
-
         return response()->json($loadingDetail);
     }
 

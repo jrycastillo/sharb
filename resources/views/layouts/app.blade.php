@@ -74,9 +74,9 @@
                             <li>
                                 <a href="{{route('addproduct.index')}}">Add Product</a>
                             </li>
-                            {{--<li>--}}
-                                {{--<a href="{{route('uncheckloading.index')}}">Uncheck Loading</a>--}}
-                            {{--</li>--}}
+                            <li>
+                                <a href="{{route('uncheckloading.index')}}">Uncheck Loading</a>
+                            </li>
                             {{--<li>--}}
                                 {{--<a href="{{route('loadings.index')}}">Disapproved Loading</a>--}}
                             {{--</li>--}}

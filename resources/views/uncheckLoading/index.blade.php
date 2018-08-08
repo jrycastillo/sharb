@@ -2,139 +2,139 @@
 
 @section('style')
     <style>
-        td.details-control {
-            text-align: center;
-            color: forestgreen;
-            cursor: pointer;
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
         }
 
-        tr.shown td.details-control {
-            text-align: center;
-            color: red;
+        .bg-white {
+            background-color: white;
         }
+
+        .card-width {
+            width: 60vw;
+        }
+
+        .card-center {
+            margin: 0 auto;
+        }
+
+        .vcard-padd {
+            padding: 2px 2px;
+        }
+
     </style>
 @endsection
 
 
 @section('content')
+    <div id="uncheckProduct">
+        <v-app class="white">
 
-    <div class="container">
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-table"></i> Loading List
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table width="100%" class="display" id="example" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Week</th>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-            </div>
-        </div>
+            <v-container>
+                <v-card class="card-width card-center">
+                    <v-card-title primary-title>
+                        <v-layout align-center justify-space-between row fill-height pa-3>
+                            <v-flex class="headline" lg6>Loading</v-flex>
+                        </v-layout>
+                    </v-card-title>
+
+                    <v-container fluid>
+                        <v-data-table
+                                :headers="headers"
+                                :items="loadings"
+                                hide-actions
+                                item-key="week_no"
+                                :headers-length="100"
+                                class="elevation-1"
+                        >
+                            <template slot="items" slot-scope="props">
+                                <tr @click="expand(props)">
+                                    <td>
+                                        <v-layout align-center justify-space-between row fill-height mx-3>
+                                            <v-flex xs11 class="title">
+                                                @{{ props.item.week_no }}
+                                            </v-flex>
+                                            <v-flex xs1>
+                                                <v-icon style="cursor: pointer;">
+                                                    @{{ props.item.arrow }}
+                                                </v-icon>
+                                            </v-flex>
+                                        </v-layout>
+                                    </td>
+                                </tr>
+                            </template>
+                            <template slot="expand" slot-scope="props">
+                                <v-card flat v-for="detail in props.item.details" :key="detail.id">
+                                    <v-card-text class="vcard-padd">
+                                        <v-layout align-center justify-space-between row fill-height mx-3>
+                                            <span>Booking Number: <strong>@{{ detail.BN }}</strong></span>
+                                            <v-btn color="info" :href="'/uncheckloading/' + detail.id ">View Detail</v-btn>
+                                        </v-layout>
+                                    </v-card-text>
+                                </v-card>
+                            </template>
+                        </v-data-table>
+                    </v-container>
+                </v-card>
+            </v-container>
+
+        </v-app>
     </div>
+
 
 @endsection
 
 
 @section('scripts')
     <script>
-        $(document).ready(function () {
-            var table = $('#example').DataTable({
-                "data": object.data,
-                select: "single",
-                "columns": [
+        new Vue({
+            el: '#uncheckProduct',
+            data: {
+                loadings: [],
+                url: "{{ url('/addproduct') }}",
+                headers: [
                     {
-                        "className": 'details-control',
-                        "orderable": false,
-                        "data": null,
-                        "defaultContent": '',
-                        "render": function () {
-                            return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
-                        },
-                        width: "15px"
+                        text: 'Week Number',
+                        align: 'left',
+                        sortable: false,
+                        value: 'name',
+                        width: '100%',
+                        class: ['title']
                     },
-                    {"data": "week_no"}
+                ]
+            },
+            methods: {
+                getData: function () {
+                    axios.get("{{ url('/api/uncheckloading') }}" + '?type=year&year=' + 2018)
+                        .then(res => {
 
-                ],
-                "order": [[1, 'asc']]
-            });
+                            let data = [];
+                            for (let gg in res.data) {
+                                let loading = {
+                                    "week_no": "",
+                                    arrow: 'keyboard_arrow_down',
+                                    "details": []
+                                };
+                                res.data[gg].forEach((val) => {
+                                    loading.week_no = val.productionWeek;
+                                    loading.details = [...loading.details, {"BN": val.BL_no, "id": val.loading_id}];
+                                });
+                                data = [...data, loading];
+                            }
+                            this.loadings = data;
 
-            // event listener sa close ug open buttons
-            $('#example tbody').on('click', 'td.details-control', function () {
-                var tr = $(this).closest('tr');
-                var tdi = tr.find("i.fa");
-                var row = table.row(tr);
-
-                if (row.child.isShown()) {
-                    // sa close
-                    row.child.hide();
-                    tr.removeClass('shown');
-                    tdi.first().removeClass('fa-minus-square');
-                    tdi.first().addClass('fa-plus-square');
+                        });
+                },
+                expand: function (props) {
+                    props.item.arrow = !props.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
+                    return props.expanded = !props.expanded
                 }
-                else {
-                    // para sa open
-                    row.child(format(row.data())).show();
-                    tr.addClass('shown');
-                    tdi.first().removeClass('fa-plus-square');
-                    tdi.first().addClass('fa-minus-square');
-                }
-            });
+            },
+            mounted() {
+                this.getData();
+            }
 
-            table.on("user-select", function (e, dt, type, cell, originalEvent) {
-                if ($(cell.node()).hasClass("details-control")) {
-                    e.preventDefault();
-                }
-            });
-        });
-
-        function format(d) {
-            // `d` is the original data object for the row
-            var gg = tr(d.details);
-
-            return gg;
-        }
-
-        function tr(d) {
-            var out = '';
-            d.forEach((loading_id) => {
-                out += '<table cellpadding="0" cellspacing="0" border="0" style="padding-left:50px;">' +
-                    '<tr>' +
-                    '<td>BL no:</td>' +
-                    '<td>' + loading_id.BN + '</td>' + '<td>' + '<a type="button" class="btn" href=" /uncheckloading/' + loading_id.id+'">Show Loading Details</a>' + '</td>' +
-                    // '<td>' + loading_id.BN + '</td>' + '<td>' + '<a type="button" class="btn" href="">Show Loading Details</a>' + '</td>' +
-                    '</tr>' +
-                    '</table>';
-            });
-
-            return out;
-        }
-
-        var object = {
-            "data": []
-        };
-
-
-                @foreach($loadingDetails as $details)
-        var ass = {
-                "week_no": "",
-                "actions": "",
-                "details": []
-            };
-        @foreach($details as  $detail)
-            ass.week_no = {{$detail->productionWeek}}
-        ass.details.push({"BN": "{{$detail->BL_no}}", "id": "{{$detail->loading_id}}"});
-        @endforeach
-        object.data.push(ass);
-        @endforeach
-
-
-
+        })
     </script>
 
 @endsection
