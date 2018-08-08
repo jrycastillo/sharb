@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\UncheckLoading;
+namespace App\Http\Controllers\Loading;
 
 use App\Loading;
 use App\LoadingDetail;
@@ -11,12 +11,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 
-class UncheckLoadingController extends Controller
+class ApprovedLoading extends Controller
 {
 
     public function index()
     {
-        return View::make('uncheckLoading.index');
+        return View::make('approvedloading.index');
     }
 
     public function show($id)
@@ -37,32 +37,12 @@ class UncheckLoadingController extends Controller
             ->first();
 
 
-        return View::make('uncheckLoading.show')
+        return View::make('approvedloading.show')
             ->with(compact('loadingDetail'))
             ->with(compact('id'))
             ->with(compact('variable'));
     }
 
-
-    public function updateStatus(Request $request, $id)
-    {
-        $data = $request->all();
-
-        $loadingDetail = LoadingDetail::all()
-            ->where('rev', '=',LoadingDetail::NEW)
-            ->where('status', '=', LoadingDetail::UNCHECK)
-            ->where('loading_id', '=', $id)
-            ->first();
-
-        if($data['approved']){
-            $loadingDetail->status= LoadingDetail::APPROVED;
-            $loadingDetail->save();
-            return response()->json($loadingDetail, 200);
-        }
-        $loadingDetail->status= LoadingDetail::DISAPPROVED;
-        $loadingDetail->save();
-        return response()->json($loadingDetail, 200);
-    }
 
     public function getLoading(Request $request)
     {
@@ -72,7 +52,7 @@ class UncheckLoadingController extends Controller
                 $year = $request->query('year');
                 $loadingDetails = LoadingDetail::all()
                     ->where('rev', '=', LoadingDetail::NEW)
-                    ->where('status', '=', LoadingDetail::UNCHECK)
+                    ->where('status', '=', LoadingDetail::APPROVED)
                     ->where('year', '=', $year)
                     ->groupBy('productionWeek');
                 return response()->json($loadingDetails);

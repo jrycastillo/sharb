@@ -150,7 +150,7 @@
                     data: formData,
                     success: function (res) {
                        // console.log(res);
-                        window.location.href = '{{route("loadings.create")}}';
+                        window.location.href = '{{route("addproduct.index")}}';
                     }
                 });
             });

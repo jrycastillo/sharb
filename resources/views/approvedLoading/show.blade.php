@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+
 @section('style')
     <style>
         h1, h2, h3, h4, h5, h6 {
@@ -9,8 +10,10 @@
     </style>
 @endsection
 
+
 @section('content')
-    <div id="uncheckloading">
+
+    <div id="approvedloading">
         <v-app class="white">
             <v-container>
                 <v-layout row wrap justify-space-between>
@@ -75,25 +78,19 @@
                             </v-flex>
                         </v-card>
                     </v-flex>
-
-                    <v-flex md12 xs12 row>
-                        <v-flex xs12 md6 px-2>
-                            <v-btn block color="success" dark @click="approve"><v-icon>check</v-icon>Approved</v-btn>
-                        </v-flex>
-                        <v-flex xs12 md6 px-2>
-                            <v-btn block color="error" dark @click="disapprove"><v-icon>close</v-icon>Disapproved</v-btn>
-                        </v-flex>
-                    </v-flex>
                 </v-layout>
             </v-container>
         </v-app>
     </div>
+
+
 @endsection
+
 
 @section('scripts')
     <script>
         new Vue({
-            el: '#uncheckloading',
+            el: '#approvedloading',
             data: {
                 headers: [
                     {
@@ -109,7 +106,7 @@
             },
             methods: {
                 getSummary() {
-                    axios.get("{{url('/api/uncheckloading')}}" + '?type=loading&id={{$id}}')
+                    axios.get("{{url('/api/approvedloading')}}" + '?type=loading&id={{$id}}')
                         .then((res) => {
                             this.loading = true;
                             res.data.forEach((val) => {
@@ -230,22 +227,11 @@
 
                             this.loading = false;
                         });
-                },
-                async approve() {
-                    const res = await axios.put("{{url('/api/uncheckloading')}}" + '/' + "{{$loadingDetail->id}}", {approved: true});
-                    window.location.href = '{{route('uncheckloading.index')}}';
-                    //console.log(res);
-                },
-                async disapprove() {
-                    const res = await axios.put("{{url('/api/uncheckloading')}}" + '/' + "{{$loadingDetail->id}}", {approved: false});
-                    window.location.href = '{{route('uncheckloading.index')}}';
-                    //console.log(res)
-                },
+                }
             },
             mounted() {
                 this.getSummary();
             }
         })
     </script>
-
 @endsection

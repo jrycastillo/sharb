@@ -20,19 +20,24 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-//ATW
-
-
 //LOADING
 Route::resource('loadings', 'Loading\LoadingController');
 Route::get('/json-loading', 'Loading\LoadingController@getLoading')->name('json-loading');
-Route::resource('uncheckloading', 'UncheckLoading\UncheckLoadingController', ['only' => ['index', 'show']]);
+//ADD LOADING
 Route::resource('addproduct', 'Loading\AddProductController', ['only' => ['index', 'show']]);
 Route::get('/api/addproduct', 'Loading\AddProductController@getLoading');
 Route::post('/api/addproduct', 'Loading\AddProductController@store');
 Route::put('/api/addproduct/{id}', 'Loading\AddProductController@updateStatus');
+//UNCHECK LOADING
+Route::resource('uncheckloading', 'UncheckLoading\UncheckLoadingController', ['only' => ['index', 'show']]);
 Route::get('/api/uncheckloading', 'UncheckLoading\UncheckLoadingController@getLoading');
 Route::put('/api/uncheckloading/{id}', 'UncheckLoading\UncheckLoadingController@updateStatus');
+//APPROVED LOADING
+Route::resource('approvedloading', 'Loading\ApprovedLoading', ['only' => ['index', 'show']]);
+Route::get('/api/approvedloading', 'Loading\ApprovedLoading@getLoading');
+//DISAPPROVED LOADING
+Route::resource('approvedloading', 'Loading\ApprovedLoading', ['only' => ['index', 'show']]);
+Route::get('/api/approvedloading', 'Loading\ApprovedLoading@getLoading');
 
 
 
@@ -47,7 +52,7 @@ Route::resource('loadings.invoice', 'Invoice\InvoiceController');
 
 
 
-//BOOKING ATW
+//BOOKING
 Route::resource('booking', 'Booking\BookingController');
 
 
