@@ -16,13 +16,12 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 
 //LOADING
-Route::resource('loadings', 'Loading\LoadingController');
-Route::get('/json-loading', 'Loading\LoadingController@getLoading')->name('json-loading');
+Route::resource('loadings', 'Loading\LoadingController', ['only'=> ['create']]);
+//Route::get('/json-loading', 'Loading\LoadingController@getLoading')->name('json-loading');
 //ADD LOADING
 Route::resource('addproduct', 'Loading\AddProductController', ['only' => ['index', 'show']]);
 Route::get('/api/addproduct', 'Loading\AddProductController@getLoading');
@@ -36,8 +35,8 @@ Route::put('/api/uncheckloading/{id}', 'UncheckLoading\UncheckLoadingController@
 Route::resource('approvedloading', 'Loading\ApprovedLoading', ['only' => ['index', 'show']]);
 Route::get('/api/approvedloading', 'Loading\ApprovedLoading@getLoading');
 //DISAPPROVED LOADING
-Route::resource('approvedloading', 'Loading\ApprovedLoading', ['only' => ['index', 'show']]);
-Route::get('/api/approvedloading', 'Loading\ApprovedLoading@getLoading');
+Route::resource('disapprovedloading', 'Loading\DisapprovedLoading', ['only' => ['index', 'show']]);
+Route::get('/api/disapprovedloading', 'Loading\DisapprovedLoading@getLoading');
 
 
 

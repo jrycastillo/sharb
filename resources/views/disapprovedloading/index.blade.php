@@ -2,6 +2,7 @@
 
 
 @section('style')
+
     <style>
         h1, h2, h3, h4, h5, h6 {
             margin: 0;
@@ -27,9 +28,9 @@
 
 @endsection
 
-
 @section('content')
-    <div id="addProduct">
+
+    <div id="disapprovedLoading">
         <v-app class="white">
             <v-container>
                 <v-card class="card-width card-center">
@@ -39,7 +40,6 @@
                         </v-layout>
                     </v-card-title>
                     <v-container fluid>
-
                         <v-data-table
                                 :headers="headers"
                                 :items="loadings"
@@ -69,7 +69,8 @@
                                     <v-card-text class="vcard-padd">
                                         <v-layout align-center justify-space-between row fill-height mx-3>
                                             <span>Booking Number: <strong>@{{ detail.BN }}</strong></span>
-                                            <v-btn color="info" :href="'/addproduct/' + detail.id ">View Detail</v-btn>
+                                            <v-btn color="info" :href="'/disapprovedloading/' + detail.id ">View Detail
+                                            </v-btn>
                                         </v-layout>
                                     </v-card-text>
                                 </v-card>
@@ -80,13 +81,19 @@
             </v-container>
         </v-app>
     </div>
+
+
+
 @endsection
 
 
+
+
 @section('scripts')
+
     <script>
         new Vue({
-            el: '#addProduct',
+            el: '#disapprovedLoading',
             data: {
                 loadings: [],
                 url: "{{ url('/addproduct') }}",
@@ -103,7 +110,7 @@
             },
             methods: {
                 getData: function () {
-                    axios.get("{{ url('/api/addproduct') }}"+ '?type=year&year='+ 2018)
+                    axios.get("{{ url('/api/disapprovedloading') }}" + '?type=year&year=' + 2018)
                         .then(res => {
 
                             let data = [];
@@ -134,5 +141,4 @@
 
         })
     </script>
-
 @endsection

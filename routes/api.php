@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 //});
 
 
-Route::resource('container', 'Loading\ContainerDetailController', ['only'=>['update','store']]);
+//Route::resource('container', 'Loading\ContainerDetailController', ['only'=>['update','store']]);
 
 
 

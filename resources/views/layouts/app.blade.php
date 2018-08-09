@@ -80,6 +80,9 @@
                             <li>
                                 <a href="{{route('approvedloading.index')}}">Approved Loading</a>
                             </li>
+                            <li>
+                                <a href="{{route('disapprovedloading.index')}}">Disapproved Loading</a>
+                            </li>
                             {{--<li>--}}
                                 {{--<a href="{{route('loadings.index')}}">Disapproved Loading</a>--}}
                             {{--</li>--}}
