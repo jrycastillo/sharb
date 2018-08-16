@@ -44,6 +44,9 @@ Route::post('/api/addproduct/{addproduct}/container', 'Container\ContainerContro
 Route::put('/api/addproduct/{addproduct}/container/{container}', 'Container\ContainerController@update')->name('addproduct.container.update');
 //PRODUCT
 Route::resource('api/product', 'Product\ProductController', ['only' => ['index']]);
+//PRICING
+Route::resource('pricing', 'Pricing\PricingController');
+Route::resource('loading.pricing', 'Pricing\PricingLoadingController');
 
 
 
