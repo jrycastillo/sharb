@@ -24,4 +24,8 @@ class Product extends Model
         return $this->belongsTo(Unit::class);
     }
 
+    public function fruit()
+    {
+        return $this->belongsTo(Fruit::class);
+    }
 }

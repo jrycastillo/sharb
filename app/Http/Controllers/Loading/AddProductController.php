@@ -40,7 +40,7 @@ class AddProductController extends Controller
         return response()->json($data);
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
         $loading = LoadingDetail::findOrFail($id);
         $variable = '&';
@@ -58,14 +58,13 @@ class AddProductController extends Controller
             ->where('rev', '=', LoadingDetail::NEW)
             ->first();
 
-
-
-
+        $url = $request->fullUrl();
 
         return View::make('addProduct.show')
             ->with(compact('loadingDetail'))
             ->with(compact('id'))
-            ->with(compact('variable'));
+            ->with(compact('variable'))
+            ->with(compact('url'));
     }
 
     public function updateStatus($id)
@@ -109,6 +108,7 @@ class AddProductController extends Controller
                 $data = Loading::findOrFail($id)
                     ->vans()
                     ->with('vanDetails.product.unit')
+                    ->with('vanDetails.product.fruit')
                     ->get();
                 return response()->json($data);
             case ($searchType === 'product'):

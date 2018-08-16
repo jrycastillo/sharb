@@ -46,7 +46,6 @@
 
                         </v-data-table>
                     </v-flex>
-
                     <v-flex xs12 md12 lg6 mb-3 px-2 v-for="(breakdown, key) in breakdowns" :key="breakdown.id">
                         <v-card style="display: grid; grid-template-columns: 1fr 1fr">
                             <v-flex mb-1 pa-3><span class="headline">VAN NO. @{{ breakdown.van_no }}</span></v-flex>
@@ -122,11 +121,12 @@
                     <v-flex md12>
                         <v-btn block color="success" @click="sendForApproval"><v-icon style="margin-right: 0.5rem;">send</v-icon>Send</v-btn>
                     </v-flex>
-
                     <v-snackbar
                             v-model="snackbar"
+                            :top="true"
                             :color="color"
                             :timeout="timeout"
+
                     >
                         Product already been added
                         <v-btn

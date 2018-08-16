@@ -3,6 +3,7 @@
 use App\Carrier;
 use App\Consignee;
 use App\Exporter;
+use App\Fruit;
 use App\Loading;
 use App\PortOfDischarge;
 use App\PortOfLoading;
@@ -64,6 +65,12 @@ $factory->define(Carrier::class, function (Faker $faker) {
 });
 
 $factory->define(Exporter::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+    ];
+});
+
+$factory->define(Fruit::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
     ];

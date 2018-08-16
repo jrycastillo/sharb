@@ -20,8 +20,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 //LOADING
-Route::resource('loadings', 'Loading\LoadingController', ['only'=> ['create']]);
-//Route::get('/json-loading', 'Loading\LoadingController@getLoading')->name('json-loading');
+Route::resource('loadings', 'Loading\LoadingController', ['only'=> ['create','update']]);
+Route::get('/json-loading', 'Loading\LoadingController@getLoading')->name('json-loading');
 //ADD LOADING
 Route::resource('addproduct', 'Loading\AddProductController', ['only' => ['index', 'show']]);
 Route::get('/api/addproduct', 'Loading\AddProductController@getLoading');
@@ -37,12 +37,19 @@ Route::get('/api/approvedloading', 'Loading\ApprovedLoading@getLoading');
 //DISAPPROVED LOADING
 Route::resource('disapprovedloading', 'Loading\DisapprovedLoading', ['only' => ['index', 'show']]);
 Route::get('/api/disapprovedloading', 'Loading\DisapprovedLoading@getLoading');
+//CONTAINER
+Route::resource('addproduct.container', 'Container\ContainerController', ['only' => ['show']]);
+Route::get('/api/addproduct/{addproduct}/container/{container}', 'Container\ContainerController@getContainer');
+Route::post('/api/addproduct/{addproduct}/container', 'Container\ContainerController@store')->name('addproduct.container.store');
+Route::put('/api/addproduct/{addproduct}/container/{container}', 'Container\ContainerController@update')->name('addproduct.container.update');
+//PRODUCT
+Route::resource('api/product', 'Product\ProductController', ['only' => ['index']]);
 
 
 
 //container
-Route::resource('loadings.container', 'Loading\ContainerController');
-Route::resource('loadings.container.detail', 'Loading\ContainerController', ['except' => ['store', 'update']]);
+//Route::resource('loadings.container', 'Loading\ContainerController');
+//Route::resource('loadings.container.detail', 'Loading\ContainerController', ['except' => ['store', 'update']]);
 
 
 

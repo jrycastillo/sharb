@@ -1,26 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Api\Booking;
+namespace App\Http\Controllers\Product;
 
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BookingController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
-
     public function index()
     {
-        //
+        $products = Product::with('unit')
+            ->with('fruit')
+            ->get();
+        return response()->json($products, 200);
     }
 
     /**
@@ -41,9 +39,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
-
-        return response()->json($data);
+        //
     }
 
     /**

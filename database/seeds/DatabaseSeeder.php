@@ -3,6 +3,7 @@
 use App\Carrier;
 use App\Consignee;
 use App\Exporter;
+use App\Fruit;
 use App\Invoice;
 use App\Loading;
 use App\LoadingDetail;
@@ -49,6 +50,7 @@ class DatabaseSeeder extends Seeder
         Vessel::truncate();
         LoadingDetail::truncate();
         Consignee::truncate();
+        Fruit::truncate();
 
 
         DB::table('units')->insert(['value' => 13.5]);
@@ -56,21 +58,23 @@ class DatabaseSeeder extends Seeder
         DB::table('units')->insert(['value' => 5]);
         DB::table('units')->insert(['value' => 3]);
 
-        DB::table('products')->insert(['name' => '4H', 'unit_id' => 1, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '5H', 'unit_id' => 1, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '6H', 'unit_id' => 1, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '7H', 'unit_id' => 1, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '8H', 'unit_id' => 1, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '7kg', 'unit_id' => 2, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '5kg', 'unit_id' => 3, 'class' => 'A']);
-        DB::table('products')->insert(['name' => '3kg', 'unit_id' => 4, 'class' => 'A']);
-        DB::table('products')->insert(['name' => 'CL', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '4H', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '5H', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '6H', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '7H', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '8H', 'unit_id' => 1, 'class' => 'B']);
-        DB::table('products')->insert(['name' => '9H', 'unit_id' => 1, 'class' => 'B']);
+        DB::table('fruits')->insert(['name' => 'Banana']);
+
+        DB::table('products')->insert(['name' => '4H', 'unit_id' => 1, 'fruit_id' => 1 ,'class' => 'A']);
+        DB::table('products')->insert(['name' => '5H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '6H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '7H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '8H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '7kg', 'unit_id' => 2, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '5kg', 'unit_id' => 3, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => '3kg', 'unit_id' => 4, 'fruit_id' => 1 , 'class' => 'A']);
+        DB::table('products')->insert(['name' => 'CL', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '4H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '5H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '6H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '7H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '8H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
+        DB::table('products')->insert(['name' => '9H', 'unit_id' => 1, 'fruit_id' => 1 , 'class' => 'B']);
 
 
 

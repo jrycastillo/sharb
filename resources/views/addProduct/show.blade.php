@@ -45,7 +45,6 @@
                                 </td>
                                 <td>@{{ props.item.total }}</td>
                             </template>
-
                         </v-data-table>
                     </v-flex>
 
@@ -59,18 +58,13 @@
                                         :items=breakdown.items
                                         hide-actions
                                         :loading="loading"
-
                                 >
                                     <template slot="items" slot-scope="props">
-                                        <td>@{{ props.item.product }}</td>
+                                        <td>@{{ props.item.fruit }}</td>
                                         <td>@{{ props.item.name }}</td>
                                         <td>@{{ props.item.unit }}</td>
                                         <td>@{{ props.item.class }}</td>
                                         <td>@{{ props.item.quantity }}</td>
-                                        <td class="justify-center layout px-0">
-                                            <v-icon small class="mr-2" @click="editItem(props.item)">edit</v-icon>
-                                            <v-icon small @click="">delete</v-icon>
-                                        </td>
                                     </template>
                                     <template slot="no-data">
                                         <v-alert :value="true" color="error" icon="warning">
@@ -79,66 +73,14 @@
                                     </template>
                                 </v-data-table>
                             </v-flex>
-                            <v-dialog style="grid-column: 1 / 3; margin: 0 0.5rem;" v-model="dialog" max-width="500px" persistent >
-                                <v-btn block color="teal darken-3" dark slot="activator"
-                                       @click="fillData(breakdown, key)">
-                                    <v-icon>add_circle_outline</v-icon>
-                                    Add Product
-                                </v-btn>
-                                <v-card>
-                                    <v-card-title>
-                                        <span class="headline">@{{ formTitle }}</span>
-                                    </v-card-title>
-                                    <v-card-text>
-                                        <v-container grid-list-md>
-                                            <v-layout wrap>
-                                                <v-flex xs6 sm6 md6 v-if="formTitle === 'Edit Product'">
-                                                    <v-text-field v-model="editedItem.name" label="Name"></v-text-field>
-                                                </v-flex>
-                                                <v-flex xs6 sm6 md6 v-else>
-                                                    <v-select
-                                                            v-model="select"
-                                                            :items="products"
-                                                            label="Product"
-                                                            item-text="text"
-                                                            item-value="id"
-                                                            required
-                                                    ></v-select>
-                                                </v-flex>
-                                                <v-flex xs6 sm6 md6>
-                                                    <v-text-field v-model="editedItem.quantity"
-                                                                  label="Quantity"></v-text-field>
-                                                </v-flex>
-                                            </v-layout>
-                                        </v-container>
-                                    </v-card-text>
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-                                        <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-                                    </v-card-actions>
-                                </v-card>
-                            </v-dialog>
+                            <v-flex px-1 style="grid-column: 1 / 3;">
+                                <v-btn block color="secondary" @click="showContainer(breakdown.id)">Add Product</v-btn>
+                            </v-flex>
                         </v-card>
                     </v-flex>
                     <v-flex md12>
                         <v-btn block color="success" @click="sendForApproval"><v-icon style="margin-right: 0.5rem;">send</v-icon>Send</v-btn>
                     </v-flex>
-
-                    <v-snackbar
-                            v-model="snackbar"
-                            :color="color"
-                            :timeout="timeout"
-                    >
-                        Product already been added
-                        <v-btn
-                                dark
-                                flat
-                                @click="snackbar = false"
-                        >
-                            Close
-                        </v-btn>
-                    </v-snackbar>
                 </v-layout>
             </v-container>
         </v-app>
@@ -164,28 +106,6 @@
                 dialog: false,
                 editedIndex: -1,
                 breakdownIndex: -1,
-                editedItem: {
-                    product_id: '',
-                    van_id: '',
-                    name: '',
-                    quantity: '',
-                    id: '',
-                    product: '',
-                    unit: '',
-                    class: '',
-                    breakdownIndex: ''
-                },
-                defaultItem: {
-                    product_id: '',
-                    van_id: '',
-                    name: '',
-                    quantity: '',
-                    id: '',
-                    product: '',
-                    unit: '',
-                    class: '',
-                    breakdownIndex: ''
-                },
                 products: [],
                 containerSize: '',
                 select: {},
@@ -193,16 +113,12 @@
                 color: 'error',
                 timeout: 2000
             },
-            computed: {
-                formTitle() {
-                    return this.editedIndex === -1 ? 'Add Product' : 'Edit Product'
-                }
-            },
             methods: {
                 getSummary() {
                     axios.get("{{url('/api/addproduct')}}" + '?type=loading&id={{$id}}')
                         .then(res => {
                             this.loading = true;
+                            //HEADERS
                             res.data.forEach((val) => {
                                 val.van_details.forEach(detail => {
                                     let check = true;
@@ -230,6 +146,7 @@
                                 sortable: false,
                                 value: 999999999
                             }];
+                            //HEADERS SUMMARY ITEMS
                             res.data.forEach((val, index) => {
                                 this.items = [...this.items, {vn: 'Van no: ' + val.van_no, value: 0, gg: [], total: 0}];
                                 this.headers.forEach((header, i) => {
@@ -269,6 +186,7 @@
                             });
                             this.items[this.items.length - 1].total = this.items[this.items.length - 1].gg.reduce((sum, item) => sum + +item.s, 0);
 
+                            //BREAKDOWN
                             res.data.forEach((val, index) => {
                                 this.breakdowns = [...this.breakdowns, {
                                     headers: [
@@ -297,11 +215,7 @@
                                             sortable: false,
                                             value: '4'
                                         },
-                                        {
-                                            text: 'Actions',
-                                            sortable: false,
-                                            value: '5'
-                                        },
+
                                     ],
                                     items: [],
                                     seal: val.seal_no,
@@ -313,18 +227,16 @@
                                         product_id: value.product.id,
                                         van_id: value.van_id,
                                         id: value.id,
-                                        product: '',
                                         name: value.product.name,
                                         unit: value.product.unit.value,
+                                        fruit: value.product.fruit.name,
                                         class: value.product.class,
                                         quantity: value.quantity,
                                         breakdownIndex: index
                                     }];
                                 });
                             });
-
                             this.loading = false;
-                            //console.log(this.breakdowns);
                         });
                 },
                 getProduct() {
@@ -338,57 +250,6 @@
                             });
                         });
                 },
-                storeContainerProduct() {
-                    const containerDetail = {
-                        van_id: this.editedItem.van_id,
-                        product_id: this.editedItem.product_id,
-                        quantity: this.editedItem.quantity
-                    };
-
-                    axios.post("{{url('/api/addproduct')}}", containerDetail)
-                        .then(res => {
-                            window.location.href = '{{route("addproduct.show", ['id'=>$id])}}';
-                        })
-                },
-                editItem(item) {
-                    this.editedIndex = this.breakdowns[item.breakdownIndex].items.indexOf(item);
-                    this.breakdownIndex = item.breakdownIndex;
-                    this.editedItem = Object.assign({}, item);
-                    this.dialog = true
-                },
-                close() {
-                    this.dialog = false;
-                    setTimeout(() => {
-                        this.editedItem = Object.assign({}, this.defaultItem);
-                        this.editedIndex = -1;
-                        this.breakdownIndex = -1;
-                        this.select = {};
-                    }, 300);
-                },
-                save() {
-                    if (this.editedIndex > -1) {
-                        Object.assign(this.breakdowns[this.breakdownIndex].items[this.editedIndex], this.editedItem);
-                    } else {
-                        this.editedItem.product_id = this.products[this.select - 1].id;
-                        this.editedItem.name = this.products[this.select - 1].name;
-                        //this.editedItem.id = ++this.containerSize;
-                        this.editedItem.product = '';
-                        this.editedItem.unit = this.products[this.select - 1].unit.value;
-                        this.editedItem.class = this.products[this.select - 1].class;
-                        this.editedItem.breakdownIndex = this.breakdownIndex;
-                        const isExisting = this.breakdowns[this.breakdownIndex].items.some((item) => {
-                            return item.product_id === this.editedItem.product_id;
-                        });
-                        if(isExisting){
-                            this.snackbar = true;
-                        }else{
-                            this.breakdowns[this.breakdownIndex].items = [...this.breakdowns[this.breakdownIndex].items, this.editedItem];
-                            this.storeContainerProduct();
-                        }
-
-                    }
-                    this.close();
-                },
                 fillData(data, index) {
                     this.editedItem.van_id = data.id;
                     this.breakdownIndex = index;
@@ -398,12 +259,9 @@
                         .then(res =>{
                             window.location.href = '{{route('addproduct.index')}}';
                         });
-                }
-
-            },
-            watch: {
-                dialog(val) {
-                    val || this.close()
+                },
+                showContainer(id) {
+                    window.location.href = '{{$url}}/container/' + id;
                 }
 
             },
