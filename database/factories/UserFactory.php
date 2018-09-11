@@ -52,11 +52,6 @@ $factory->define(Supplier::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Vessel::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-    ];
-});
 
 $factory->define(Carrier::class, function (Faker $faker) {
     return [

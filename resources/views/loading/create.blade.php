@@ -26,7 +26,6 @@
     </style>
 @endsection
 @section('content')
-
     <div class="container">
         <div class="card mb-5 bx-sw">
             <div class="card-header">
@@ -75,6 +74,7 @@
             </div>
         </div>
     </div>
+
 
 @endsection
 
@@ -149,7 +149,7 @@
                     method: 'put',
                     data: formData,
                     success: function (res) {
-                       // console.log(res);
+                        // console.log(res);
                         window.location.href = '{{route("addproduct.index")}}';
                     }
                 });

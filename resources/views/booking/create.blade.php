@@ -66,101 +66,102 @@
 
 
 @section('content')
-    <div class="container">
-        <div class="card mb-5 bx-sw">
-            <div class="card-header">
-                <h3>
-                    <i class="fa fa-table"> Create Booking / ATW</i>
-                </h3>
-            </div>
-            <div class="card-body">
-                {!! Form::open(['method' => 'POST', 'action' => 'Booking\BookingController@store','id' => 'myForm' ]) !!}
-                <div class="bg mb-3">
-                    {!! Form::label('carrier_id', 'Carrier:', ['class' => 'label']) !!}
-                    {!! Form::select('carrier_id',['' => 'Choose options'] + $carriers ,null , ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('BL_no', 'Booking No:', ['class' => 'label']) !!}
-                    {!! Form::text('BL_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('vessel', 'Vessel Name:', ['class' => 'label']) !!}
-                    {!! Form::text('vessel', null, ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('voyage_no', 'Voyage No:', ['class' => 'label']) !!}
-                    {!! Form::text('voyage_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('ETD', 'ETD:', ['class' => 'label']) !!}
-                    {!! Form::date('ETD', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('ETA', 'ETA:', ['class' => 'label']) !!}
-                    {!! Form::date('ETA', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('portOfDischarge_id', 'Port of Discharge:', ['class' => 'label']) !!}
-                    {!! Form::select('portOfDischarge_id',['' => 'Choose options'] + $portOfDischarges ,null , ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('portOfLoading_id', 'Port of Loading:', ['class' => 'label']) !!}
-                    {!! Form::select('portOfLoading_id',['' => 'Choose options'] + $portOfLoadings ,null , ['class' => 'form-control', 'required' => 'required']) !!}
-
-                    {!! Form::label('exporter_id', 'Exporter:', ['class' => 'label']) !!}
-                    {!! Form::select('exporter_id',['' => 'Choose options'] + $exporters ,null , ['class' => 'form-control', 'required' => 'required']) !!}
-
-
-                    <div class="card border-success mb-3 grid-full">
-                        <div class="card-header">
-                            <h5><i class="fa fa-truck"> Container</i></h5>
-                        </div>
-                        <div class="card-body flex j-cont">
-                            <div class="mb-3 flex w-100 j-cont">
-                                <div class="w90">
-                                    <input type="text" class="form-control w-100" id="van" placeholder="Van no"/>
-                                </div>
-                                <button class="btn btn-success add_fields">Enter</button>
-                            </div>
-                            <ul class="list-group w40">
-                                <li class="list-group-item">fsfa</li>
-                            </ul>
-                            <div class="w-50 ht">
-                                <table class="table table-bordered">
-                                    <thead class="thead-dark">
-                                    <tr>
-                                        <th>Van no</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="wrapper">
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
+    <div id="book">
+            <div class="container">
+                <div class="card mb-5 bx-sw">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fa fa-table"> Create Booking / ATW</i>
+                        </h3>
                     </div>
+                    <div class="card-body">
+                        {!! Form::open(['method' => 'POST', 'action' => 'Booking\BookingController@store','id' => 'myForm' ]) !!}
+                        <div class="bg mb-3">
+                            {!! Form::label('carrier_id', 'Carrier:', ['class' => 'label']) !!}
+                            {!! Form::select('carrier_id',['' => 'Choose options'] + $carriers ,null , ['class' => 'form-control', 'required' => 'required']) !!}
 
-                    {!! Form::submit('Create Booking', ['class' => 'btn btn-primary ATW-button', 'id' => 'submit', 'disabled' => 'true']) !!}
+                            {!! Form::label('BL_no', 'Booking No:', ['class' => 'label']) !!}
+                            {!! Form::text('BL_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('vessel', 'Vessel Name:', ['class' => 'label']) !!}
+                            {!! Form::text('vessel', null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('voyage_no', 'Voyage No:', ['class' => 'label']) !!}
+                            {!! Form::text('voyage_no', null, ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('ETD', 'ETD:', ['class' => 'label']) !!}
+                            {!! Form::date('ETD', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('ETA', 'ETA:', ['class' => 'label']) !!}
+                            {!! Form::date('ETA', \Carbon\Carbon::now(), ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('portOfDischarge_id', 'Port of Discharge:', ['class' => 'label']) !!}
+                            {!! Form::select('portOfDischarge_id',['' => 'Choose options'] + $portOfDischarges ,null , ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('portOfLoading_id', 'Port of Loading:', ['class' => 'label']) !!}
+                            {!! Form::select('portOfLoading_id',['' => 'Choose options'] + $portOfLoadings ,null , ['class' => 'form-control', 'required' => 'required']) !!}
+
+                            {!! Form::label('exporter_id', 'Exporter:', ['class' => 'label']) !!}
+                            {!! Form::select('exporter_id',['' => 'Choose options'] + $exporters ,null , ['class' => 'form-control', 'required' => 'required']) !!}
+
+
+                            <div class="card border-success mb-3 grid-full">
+                                <div class="card-header">
+                                    <h5><i class="fa fa-truck"> Container</i></h5>
+                                </div>
+                                <div class="card-body flex j-cont">
+                                    <div class="mb-3 flex w-100 j-cont">
+                                        <div class="w90">
+                                            <input type="text" class="form-control w-100" id="van"
+                                                   placeholder="Van no"/>
+                                        </div>
+                                        <button class="btn btn-success add_fields">Enter</button>
+                                    </div>
+                                    <ul class="list-group w40">
+                                        <li class="list-group-item">fsfa</li>
+                                    </ul>
+                                    <div class="w-50 ht">
+                                        <table class="table table-bordered">
+                                            <thead class="thead-dark">
+                                            <tr>
+                                                <th>Van no</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="wrapper">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            {!! Form::submit('Create Booking', ['class' => 'btn btn-primary ATW-button', 'id' => 'submit', 'disabled' => 'true']) !!}
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
                 </div>
-                {!! Form::close() !!}
-
-
             </div>
-        </div>
     </div>
 
 

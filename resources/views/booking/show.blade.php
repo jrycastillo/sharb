@@ -41,7 +41,6 @@
     </style>
 @endsection
 @section('content')
-
     <div class="container">
         <div class="mb-3 card">
             <div class="card-header">
@@ -78,7 +77,6 @@
         </div>
     </div>
 
-
-
 @endsection
+
 

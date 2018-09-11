@@ -31,38 +31,41 @@
 @endsection
 
 @section('content')
-
-    <div class="container">
-        <div class="card-body">
-            <div class="card-header">
-                <i class="fa fa-table">ETW List</i>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTables" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Booking Number</th>
-                            <th>Date</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($loadings as $loading)
-                            <tr>
-                                <td>{{$loading->BL_no}}</td>
-                                <td>{{$loading->created_at}}</td>
-                                <td><a href="{{route('booking.show', ['id'=>$loading->id])}}" type="button" class="btn-add" style="text-decoration: none">View
-                                        Details</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+    <div id="book">
+            <div class="container">
+                <div class="card-body">
+                    <div class="card-header">
+                        <i class="fa fa-table">ETW List</i>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTables" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Booking Number</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($loadings as $loading)
+                                    <tr>
+                                        <td>{{$loading->BL_no}}</td>
+                                        <td>{{$loading->created_at}}</td>
+                                        <td><a href="{{route('booking.show', ['id'=>$loading->id])}}" type="button"
+                                               class="btn-add" style="text-decoration: none">View
+                                                Details</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
+
 
 
 @endsection
@@ -73,5 +76,6 @@
         $(document).ready(function () {
             $('#dataTables').DataTable();
         })
+
     </script>
 @endsection

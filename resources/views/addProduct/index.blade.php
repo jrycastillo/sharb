@@ -6,7 +6,6 @@
         h1, h2, h3, h4, h5, h6 {
             margin: 0;
         }
-
         .bg-white {
             background-color: white;
         }
@@ -22,7 +21,6 @@
         .vcard-padd {
             padding: 2px 2px;
         }
-
     </style>
 
 @endsection
@@ -30,16 +28,30 @@
 
 @section('content')
     <div id="addProduct">
-        <v-app class="white">
+        <v-app>
             <v-container>
                 <v-card class="card-width card-center">
                     <v-card-title primary-title>
                         <v-layout align-center justify-space-between row fill-height pa-3>
                             <v-flex class="headline" lg6>Add Products</v-flex>
+                            <v-flex>
+                                <v-divider
+                                        class="mx-2"
+                                        inset
+                                        vertical
+                                >
+                                </v-divider>
+                            </v-flex>
+                            <v-spacer></v-spacer>
+                            <v-combobox
+                                    v-model="select"
+                                    :items="items"
+                                    label="Select Year"
+                                    @change="getData"
+                            ></v-combobox>
                         </v-layout>
                     </v-card-title>
                     <v-container fluid>
-
                         <v-data-table
                                 :headers="headers"
                                 :items="loadings"
@@ -69,7 +81,8 @@
                                     <v-card-text class="vcard-padd">
                                         <v-layout align-center justify-space-between row fill-height mx-3>
                                             <span>Booking Number: <strong>@{{ detail.BN }}</strong></span>
-                                            <v-btn color="info" :href="'/addproduct/' + detail.id ">View Detail</v-btn>
+                                            <v-btn color="info" :href="'/addproduct/' + detail.id ">View Detail
+                                            </v-btn>
                                         </v-layout>
                                     </v-card-text>
                                 </v-card>
@@ -99,36 +112,50 @@
                         width: '100%',
                         class: ['title']
                     },
-                ]
+                ],
+                items: [],
+                select: '',
+            },
+            watch: {
+                loadings(value) {
+                    this.loadings = value;
+                }
             },
             methods: {
-                getData: function () {
-                    axios.get("{{ url('/api/addproduct') }}"+ '?type=year&year='+ 2018)
-                        .then(res => {
-
-                            let data = [];
-                            for (let gg in res.data) {
-                                let loading = {
-                                    "week_no": "",
-                                    arrow: 'keyboard_arrow_down',
-                                    "details": []
-                                };
-                                res.data[gg].forEach((val) => {
-                                    loading.week_no = val.productionWeek;
-                                    loading.details = [...loading.details, {"BN": val.BL_no, "id": val.loading_id}];
-                                });
-                                data = [...data, loading];
-                            }
-                            this.loadings = data;
-
+                async getData() {
+                    const res = await axios.get("{{ url('/api/addproduct') }}" + '?type=year&year=' + this.select);
+                    let data = [];
+                    for (let gg in res.data) {
+                        let loading = {
+                            "week_no": "",
+                            arrow: 'keyboard_arrow_down',
+                            "details": []
+                        };
+                        res.data[gg].forEach((val) => {
+                            loading.week_no = val.productionWeek;
+                            loading.details = [...loading.details, {"BN": val.BL_no, "id": val.loading_id}];
                         });
+                        data = [...data, loading];
+                    }
+                    this.loadings = data;
+
                 },
                 expand: function (props) {
                     props.item.arrow = !props.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
                     return props.expanded = !props.expanded
+                },
+                getYear() {
+                    let currentYear = new Date().getFullYear(), years = [];
+                    let startYear = 2014;
+                    while(startYear <= currentYear) {
+                        years.push(startYear++);
+                    }
+                    this.items = years;
+                    this.select = this.items[this.items.length-1];
                 }
             },
             mounted() {
+                this.getYear();
                 this.getData();
             }
 

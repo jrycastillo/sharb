@@ -51,7 +51,7 @@
                     <v-flex xs12 md12 lg6 mb-3 px-2 v-for="(breakdown, key) in breakdowns" :key="breakdown.id">
                         <v-card style="display: grid; grid-template-columns: 1fr 1fr">
                             <v-flex mb-1 pa-3><span class="headline">VAN NO. @{{ breakdown.van_no }}</span></v-flex>
-                            <v-flex mb-1 pa-3><span class="headline">SEAL NO. @{{ breakdown.van_no }}</span></v-flex>
+                            <v-flex mb-1 pa-3><span class="headline">SEAL NO. @{{ breakdown.seal }}</span></v-flex>
                             <v-flex mb-1 style="grid-column: 1 / 3;">
                                 <v-data-table
                                         :headers=breakdown.headers
@@ -79,7 +79,10 @@
                         </v-card>
                     </v-flex>
                     <v-flex md12>
-                        <v-btn block color="success" @click="sendForApproval"><v-icon style="margin-right: 0.5rem;">send</v-icon>Send</v-btn>
+                        <v-btn block color="success" @click="sendForApproval">
+                            <v-icon style="margin-right: 0.5rem;">send</v-icon>
+                            Send
+                        </v-btn>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -130,7 +133,7 @@
                                     });
                                     if (check) {
                                         this.headers = [...this.headers, {
-                                            text: detail.product.name + ' - ' +detail.product.class,
+                                            text: detail.product.name + ' - ' + detail.product.class,
                                             sortable: false,
                                             value: detail.product.id
                                         }];
@@ -245,7 +248,7 @@
                             this.products = res.data;
 
                             this.products.forEach((val, index) => {
-                                val = {...val, text: val.name + ' - Class '+ val.class};
+                                val = {...val, text: val.name + ' - Class ' + val.class};
                                 Object.assign(this.products[index], val);
                             });
                         });
@@ -256,7 +259,7 @@
                 },
                 sendForApproval() {
                     axios.put("{{url('/api/addproduct')}}" + '/' + "{{$loadingDetail->id}}")
-                        .then(res =>{
+                        .then(res => {
                             window.location.href = '{{route('addproduct.index')}}';
                         });
                 },

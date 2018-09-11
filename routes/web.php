@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('landing');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -42,11 +42,12 @@ Route::resource('addproduct.container', 'Container\ContainerController', ['only'
 Route::get('/api/addproduct/{addproduct}/container/{container}', 'Container\ContainerController@getContainer');
 Route::post('/api/addproduct/{addproduct}/container', 'Container\ContainerController@store')->name('addproduct.container.store');
 Route::put('/api/addproduct/{addproduct}/container/{container}', 'Container\ContainerController@update')->name('addproduct.container.update');
+Route::put('/api/addproduct/{addproduct}/seal/{container}', 'Container\ContainerController@updateSeal')->name('addproduct.seal.update');
 //PRODUCT
 Route::resource('api/product', 'Product\ProductController', ['only' => ['index']]);
 //PRICING
 Route::resource('pricing', 'Pricing\PricingController');
-Route::resource('loading.pricing', 'Pricing\PricingLoadingController');
+//Route::resource('loading.pricing', 'Pricing\PricingLoadingController');
 
 
 

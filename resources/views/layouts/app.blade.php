@@ -8,11 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    {!! Html::script('js/app.js') !!}
-    <!-- Fonts -->
+{!! Html::script('js/app.js') !!}
+<!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
@@ -84,10 +85,10 @@
                                 <a href="{{route('disapprovedloading.index')}}">Disapproved Loading</a>
                             </li>
                             {{--<li>--}}
-                                {{--<a href="{{route('loadings.index')}}">Disapproved Loading</a>--}}
+                            {{--<a href="{{route('loadings.index')}}">Disapproved Loading</a>--}}
                             {{--</li>--}}
                             {{--<li>--}}
-                                {{--<a href="{{route('loadings.index')}}">Approved Loading</a>--}}
+                            {{--<a href="{{route('loadings.index')}}">Approved Loading</a>--}}
                             {{--</li>--}}
                         </ul>
                     </li>
@@ -119,6 +120,12 @@
                                 <a href="{{route('portofdischarge.index')}}">View Destinations</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                        <a class="nav-link" href="{{route('pricing.index')}}">
+                            <i class="fa fa-fw fa-dashboard"></i>
+                            <span class="nav-link-text">Pricing</span>
+                        </a>
                     </li>
                     <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
                         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse"

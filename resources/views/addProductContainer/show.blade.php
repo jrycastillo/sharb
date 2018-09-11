@@ -16,18 +16,34 @@
                             vertical
                     ></v-divider>
                     <v-toolbar-title>
-                        <v-layout align-center>
-                            <v-text-field
-                                    label="Seal no."
-                                    outline
-                                    full-width
-                                    readonly
-                                    v-model="seal_no"
-                            ></v-text-field>
-                        </v-layout>
+                        Seal no. @{{ seal_no }}
+                    </v-toolbar-title>
+                    <v-toolbar-title style="z-index: 2001;">
+                        <v-btn @click="sealDialog = true" color="primary" dark>Enter Seal</v-btn>
+                        <v-dialog v-model="sealDialog" max-width="500px">
+                            <v-card>
+                                <v-card-title>
+                                    <span class="headline">Seal Number</span>
+                                </v-card-title>
+                                <v-card-text>
+                                    <v-container grid-list-md>
+                                        <v-layout wrap>
+                                            <v-flex xs12 sm6 md4>
+                                                <v-text-field label="Seal Number" required v-model="seal_noDialog"></v-text-field>
+                                            </v-flex>
+                                        </v-layout>
+                                    </v-container>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer></v-spacer>
+                                    <v-btn color="blue darken-1" flat @click.native="sealDialog = false">Close</v-btn>
+                                    <v-btn color="blue darken-1" flat @click.native="updateSeal">Save</v-btn>
+                                </v-card-actions>
+                            </v-card>
+                        </v-dialog>
                     </v-toolbar-title>
                     <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="500px">
+                    <v-dialog v-model="dialog" max-width="500px" style="z-index: 2000;">
                         <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
                         <v-card>
                             <v-card-title>
@@ -105,7 +121,6 @@
             </v-container>
         </v-app>
     </div>
-
 @endsection
 
 @section('scripts')
@@ -115,11 +130,13 @@
             el: '#container',
             data: {
                 dialog: false,
+                sealDialog: false,
                 alert: false,
                 alertMessage: '',
                 van_id: '',
                 van_no: '',
                 seal_no: '',
+                seal_noDialog: '',
                 headers: [
                     {text: 'Fruits', align: 'left', value: 'fruit', sortable: false},
                     {text: 'Name', value: 'name', sortable: false},
@@ -178,6 +195,16 @@
                         val = {...val, text: val.name + ' - ' + val.class};
                         this.products = [...this.products, val];
                     });
+                },
+                async updateSeal() {
+                    const data = {
+                        seal_no: this.seal_noDialog
+                    };
+                    const res = await axios.put('{{route("addproduct.seal.update", ["id"=>$first,"van_id"=>$second])}}', data);
+                    this.sealDialog = false;
+                    this.seal_no = this.seal_noDialog;
+
+                    console.log(res.data);
                 },
                 editItem(item) {
                     this.editedIndex = this.containers.indexOf(item);
@@ -258,10 +285,7 @@
                         product_id: this.editedItem.product.id,
                         quantity: this.editedItem.quantity
                     };
-
-                    await axios.put('{{route("addproduct.container.update", ["id"=>$first,"van_id"=>$second])}}', data);
-
-
+                    const res = await axios.put('{{url("api/addproduct/$first/container")}}/' + data.id, data);
                 }
 
             },

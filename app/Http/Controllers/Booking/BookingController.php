@@ -10,7 +10,6 @@ use App\PortOfDischarge;
 use App\PortOfLoading;
 use App\Supplier;
 use App\Van;
-use App\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -51,7 +50,6 @@ class BookingController extends Controller
     public function create()
     {
 
-        $vessels = Vessel::pluck('name', 'id')->all();
         $exporters = Exporter::pluck('name', 'id')->all();
         $carriers = Carrier::pluck('name', 'id')->all();
         $suppliers = Supplier::pluck('name', 'id')->all();
@@ -60,7 +58,6 @@ class BookingController extends Controller
         $years = range(Carbon::now()->year, 2010);
 
         return View::make('booking.create')
-            ->with(compact('vessels'))
             ->with(compact('exporters'))
             ->with(compact('carriers'))
             ->with(compact('suppliers'))

@@ -29,7 +29,6 @@
 @section('content')
     <div id="uncheckProduct">
         <v-app class="white">
-
             <v-container>
                 <v-card class="card-width card-center">
                     <v-card-title primary-title>

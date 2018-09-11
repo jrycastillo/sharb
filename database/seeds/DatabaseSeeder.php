@@ -47,7 +47,6 @@ class DatabaseSeeder extends Seeder
         Supplier::truncate();
         Van::truncate();
         VanDetail::truncate();
-        Vessel::truncate();
         LoadingDetail::truncate();
         Consignee::truncate();
         Fruit::truncate();
@@ -83,7 +82,6 @@ class DatabaseSeeder extends Seeder
         $podQuantity = 20;
         $polQuantity = 20;
         $supplierQuantity = 30;
-        $vesselQuantity = 30;
         $carrierQuantity = 30;
         $exporterQuantity = 30;
         $consigneeQuantity=30;
@@ -93,7 +91,6 @@ class DatabaseSeeder extends Seeder
         factory(PortOfDischarge::class, $podQuantity)->create();
         factory(PortOfLoading::class, $polQuantity)->create();
         factory(Supplier::class, $supplierQuantity)->create();
-        factory(Vessel::class, $vesselQuantity)->create();
         factory(Carrier::class, $carrierQuantity)->create();
         factory(Exporter::class, $exporterQuantity)->create();
         factory(Consignee::class, $consigneeQuantity)->create();

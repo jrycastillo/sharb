@@ -35,14 +35,24 @@ class ContainerController extends Controller
         return response()->json($vanDetails, 200);
     }
 
-    public function update(Request $request, Van $van, $van_id)
+    public function update(Request $request, $van, $van_id)
     {
         $vanDetail = VanDetail::findOrFail($van_id);
-        $vanDetail->fill($request->only([
-            'product_id',
-            'quantity'
-        ]));
+        $data = $request->all();
+
+        $vanDetail->quantity = $data['quantity'];
+        $vanDetail->product_id = $data['product_id'];
         $vanDetail->save();
         return response()->json($vanDetail, 200);
+    }
+
+    public function updateSeal(Request $request, $id1, $id2)
+    {
+
+        $data = $request->all();
+        $van = Van::findOrFail($id2);
+        $van->seal_no = $data['seal_no'];
+        $van->save();
+        return response()->json($data['seal_no'], 200);
     }
 }

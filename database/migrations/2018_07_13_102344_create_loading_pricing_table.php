@@ -18,8 +18,6 @@ class CreateLoadingPricingTable extends Migration
             $table->integer('pricing_id')->index()->unsigned();
             $table->integer('loading_id')->index()->unsigned();
 
-            $table->foreign('pricing_id')->references('id')->on('pricings');
-            $table->foreign('loading_id')->references('id')->on('loadings');
         });
     }
 
